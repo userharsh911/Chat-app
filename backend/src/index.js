@@ -23,7 +23,7 @@ app.use(cors({
 app.use('/api/auth',authRouter)
 app.use('/api/messages',message)
 
-if(process.env.JWT_SECURE==="production"){
+if(process.env.NODE_ENV==="production"){
     app.use(express.static(path.join(__dirname,"../frontend/dist")))
 
     app.get("*",(req,res)=>{
