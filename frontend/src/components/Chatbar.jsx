@@ -31,7 +31,11 @@ const Chatbar = () => {
     <div className={` ${showUserSideBar ? 'block' : ''} w-full pb-4 bg-base-content overflow-hidden`}>
         <MessageNav/>
         <div className='w-full h-4/5 bg-base-content overflow-y-scroll text-base-300'>
-        {
+        {messages?.length==0 ? (
+            <div className='w-full h-full flex justify-center items-center'>
+                <p className='text-info font-semibold'>No messages yet</p>
+            </div>)
+        :
             messages?.map((item)=>(
                 <div key={item._id} className={`chat ${item?.senderId==userAuth._id ? 'chat-end' : 'chat-start'}`}>
                     <div className="chat-image avatar">
