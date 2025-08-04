@@ -8,9 +8,6 @@
     "start":"npm run start --prefix backend"
   },
   "keywords": [],
-  "engines": {
-  "node": "20.x"
-},
   "author": "",
   "license": "ISC",
   "type": "commonjs"
