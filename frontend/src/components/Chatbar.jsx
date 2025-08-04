@@ -1,21 +1,18 @@
 import React from 'react'
 import MessageNav from './MessageNav'
 import SendMessages from './SendMessages'
-// import UsersMessage from './UsersMessage'
 import userImage from "/user.png"
 import { useEffect } from 'react'
 import useBearStore from '../store/store'
 import useMessages from '../store/message.store'
-import { useState } from 'react'
 import dateTime from '../constant/dateTime'
 import { useRef } from 'react'
-import MessageSkeleton from './messageSkeleton'
+import MessageSkeleton from './MessageSkeleton'
 
 const Chatbar = () => {
-  const [localMessage, setLocalMessage] = useState([])
     const scrollRef = useRef(null)
-    const {getMessages, selectedUser,isMessageGet,messages,subscribeToMessage,unSubscribeFromMessage,isMessageSent} = useMessages(state=>state)
-    const {userAuth, setShowUserSideBar, showUserSideBar} = useBearStore(state=>state)
+    const {getMessages, selectedUser,isMessageGet,messages,subscribeToMessage,unSubscribeFromMessage} = useMessages(state=>state)
+    const {userAuth, showUserSideBar} = useBearStore(state=>state)
     useEffect(()=>{
         getMessages(selectedUser._id)
         subscribeToMessage()
