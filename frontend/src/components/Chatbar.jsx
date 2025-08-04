@@ -7,7 +7,7 @@ import useBearStore from '../store/store'
 import useMessages from '../store/message.store'
 import dateTime from '../constant/dateTime'
 import { useRef } from 'react'
-import MessageSkeleton from './MessageSkeleton'
+import SkeletonOfMessage from './SkeletonOfMessage'
 
 const Chatbar = () => {
     const scrollRef = useRef(null)
@@ -62,7 +62,7 @@ const Chatbar = () => {
   )
   else return(
     <div className='w-full h-full bg-base-content ps-3 overflow-scroll text-base-300'>
-        <MessageSkeleton/>
+        <SkeletonOfMessage/>
     </div>
   )
 }

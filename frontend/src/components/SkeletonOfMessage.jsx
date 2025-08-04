@@ -1,6 +1,6 @@
 import React from 'react'
 
-const MessageSkeleton = () => {
+const SkeletonOfMessage = () => {
     const arr = [1,2,3,4,5,6,7]
   return (
     <>
@@ -24,4 +24,4 @@ const MessageSkeleton = () => {
   )
 }
 
-export default MessageSkeleton
+export default SkeletonOfMessage
