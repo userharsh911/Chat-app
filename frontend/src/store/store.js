@@ -21,7 +21,7 @@ const useBearStore = create((set,get)=>({
             get().connectSocket();
             return res.data
         } catch (error) {
-            console.log("error while fetching data to check auth ",error)
+            // console.log("error while fetching data to check auth ",error)
             toast.error(error.response.data.message,{
                 duration: 1000,
             })
@@ -53,7 +53,7 @@ const useBearStore = create((set,get)=>({
             return response.data
         } catch (error) {
             toast.error(error.response.data.message)
-            console.log("error while logging in axios ",error)
+            // console.log("error while logging in axios ",error)
             return null
         }
             
@@ -71,7 +71,7 @@ const useBearStore = create((set,get)=>({
             })
         } catch (error) {
             toast.error(error.response.data.message)
-            console.log("error while logout in axios ",error)
+            // console.log("error while logout in axios ",error)
             return false
         }
         finally{
@@ -91,7 +91,7 @@ const useBearStore = create((set,get)=>({
             });
             return updatedUser;
         } catch (error) {
-            console.log("error while uploading image by axios ",error)
+            // console.log("error while uploading image by axios ",error)
             toast.error(error.response.data.message)
         }
     },
@@ -99,10 +99,10 @@ const useBearStore = create((set,get)=>({
     getAllUsers: async()=>{
         try {
             const res = await axiosApi.get("/messages/users")
-            console.log(res)
+            // console.log(res)
             set({allUser:res.data})
         } catch (error) {
-            console.log("error while fetching all users ",error.message)
+            // console.log("error while fetching all users ",error.message)
             toast.error(error.response.data.message)
         }
     },
@@ -120,7 +120,7 @@ const useBearStore = create((set,get)=>({
 
         socket.on('onlineUsers',(userIds)=>{
             set({onlineUserIds:userIds})
-            console.log("online users ",get().onlineUserIds)
+            // console.log("online users ",get().onlineUserIds)
         })
     },
 

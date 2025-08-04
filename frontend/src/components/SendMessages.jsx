@@ -19,7 +19,7 @@ const SendMessages = () => {
         const preImage = showImage;
         setValue("text","")
         setShowImage(null)
-        console.log("submit image ",image)
+        // console.log("submit image ",image)
         try {
             setIsMessageSent(true)
             if(text || image[0]){
@@ -33,7 +33,7 @@ const SendMessages = () => {
                     await sendMessages({text,image:base64Image})
                 }
             }else{
-                console.log(data)
+                // console.log(data)
                 await sendMessages({text,image:preImage})
             }
             
@@ -49,7 +49,7 @@ const SendMessages = () => {
     const baseImage = watch('image')
     useEffect(()=>{
         if(baseImage && baseImage?.length!=0){
-            console.log(baseImage)
+            (baseImage)
             const reader = new FileReader()
             reader.readAsDataURL(baseImage[0])
             reader.onload = async()=>{

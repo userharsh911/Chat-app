@@ -11,15 +11,15 @@ const useMessages = create((set,get)=>({
         set({selectedUser:user})
     },
     getMessages:async(id)=>{
-        console.log('call')
+        // console.log('call')
         set({isMessageGet:true})
         try {
             const res = await axiosApi.get(`/messages/${id}`)
             set({messages:res.data.message})
-            console.log("mila res ",res.data.message)
+            // console.log("mila res ",res.data.message)
             return res.data;
         } catch (error) {
-            console.log("error while getting messages ",error.message)
+            // console.log("error while getting messages ",error.message)
             toast.error(error.response.data.message)
         }finally{
             set({isMessageGet:false})
@@ -29,12 +29,12 @@ const useMessages = create((set,get)=>({
         set({isMessageSent:true})
         try {
             const {selectedUser,messages} = get()
-            console.log("selected user",selectedUser)
+            // console.log("selected user",selectedUser)
             const res = await axiosApi.post(`/messages/send/${selectedUser._id}`,data)
             set({messages:[...messages,res.data.message]})
             return res.data;
         } catch (error) {
-            console.log("error while sending messages ",error)
+            // console.log("error while sending messages ",error)
             toast.error(error.response.data.message)
         }
         finally{
@@ -50,7 +50,7 @@ const useMessages = create((set,get)=>({
         if(!selectedUser) return;
         const socket = useBearStore.getState().socket;
         socket.on("updateMessage",(newMessage)=>{
-            console.log("this message is new ",newMessage)
+            // console.log("this message is new ",newMessage)
             if(newMessage.senderId==get().selectedUser._id){
                 set({messages:[...get().messages,newMessage]})
             }

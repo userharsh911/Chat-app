@@ -23,7 +23,7 @@ export const postLogin = async (req,res)=>{
         // req.user = user
         return res.status(200).json(user)
     } catch (error) {
-        console.log(error.message)
+        // console.log(error.message)
         return res.status(500).json("internal server error")
     }
 }

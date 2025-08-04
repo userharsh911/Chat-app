@@ -78,7 +78,7 @@ const Signup = () => {
                   {...register('email', {
                     required: { value: true, message: "Email address can't be empty" },
                     pattern: {
-                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                      value: /^[A-Za-z]+(?: [A-Za-z]+)*$/,
                       message: "Enter a valid email address"
                     }
                   })}
@@ -97,7 +97,7 @@ const Signup = () => {
                   {...register('password', {
                     required: { value: true, message: "Password can't be empty" },
                     pattern: {
-                      value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                      value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#%*&+(),;'.[]$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                       message: "Password must be 8+ chars, include uppercase, lowercase, number & special character"
                     }
                   })}

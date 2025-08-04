@@ -11,7 +11,7 @@ const App = () => {
   const {messages} = useMessages(state=>state)
   const {changeTheme,theme} = useTheme((state)=>state)
   useEffect(()=>{
-    console.log("evey messages ",messages)
+    // console.log("evey messages ",messages)
     ischeckAuth()
   },[ischeckAuth,messages])
   useEffect(()=>{

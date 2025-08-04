@@ -14,7 +14,7 @@ const Sidebar = () => {
         getAllUsers()
     },[getAllUsers,onlineUserIds])
 
-    console.log('online users ',onlineUserIds)
+    // console.log('online users ',onlineUserIds)
 
 
   return (

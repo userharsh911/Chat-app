@@ -22,11 +22,11 @@ const Chatbar = () => {
      if(!isMessageGet){
        scrollRef.current?.scrollIntoView({ behavior: "auto"});
         
-        console.log("run")
+        // console.log("run")
      }
    },[selectedUser,isMessageGet,messages])
 
-   console.log("mess mess ",messages)
+//    console.log("mess mess ",messages)
   if(!isMessageGet)return (
     <div className={` ${showUserSideBar ? 'block' : ''} w-full pb-4 bg-base-content overflow-hidden`}>
         <MessageNav/>

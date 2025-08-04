@@ -10,7 +10,7 @@ export const getAllUsersForSidebar = async (req,res)=>{
         
         return res.status(200).json(allUsers)
     } catch (error) {
-        console.log("error from getUsers controller while fetching all users ",error )
+        // console.log("error from getUsers controller while fetching all users ",error )
         return res.status(500).json({message:"internal server errro"})
     }
 }
@@ -30,7 +30,7 @@ export const getMessages = async(req,res)=>{
         res.status(200).json({message:yourMessage})
 
     } catch (error) {
-        console.log("error while fetching all messages ",error)   
+        // console.log("error while fetching all messages ",error)   
         res.status(500).json({message:"internal server error"})
     }
 }
@@ -43,9 +43,9 @@ export const sendMessage = async(req,res)=>{
     try {
         // base64Image
         let imageUrl;
-        console.log("image ",image)
-        console.log("recieve ",recieverId)
-        console.log("send ",senderId)
+        // console.log("image ",image)
+        // console.log("recieve ",recieverId)
+        // console.log("send ",senderId)
         if(image){
             imageUrl = await cloudinary.uploader.upload(image)
         }
@@ -66,7 +66,7 @@ export const sendMessage = async(req,res)=>{
 
         
     } catch (error) {
-        console.log("error while uploading image or send message ",error);
+        // console.log("error while uploading image or send message ",error);
         return res.status(500).json({message:"internal server error"});
     }
 }

@@ -27,7 +27,7 @@ const Login = () => {
       })
       navigate('/')
     }
-    console.log("User logged in:", userData);
+    // console.log("User logged in:", userData);
     setLoader(false)
   };
   return (

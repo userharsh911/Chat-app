@@ -21,10 +21,10 @@ const Profile = () => {
     }
     
   },[file,userProfile])
-  console.log(userAuth)
+  // console.log(userAuth)
   useEffect(()=>{
     const date = new Date(userAuth?.createdAt)
-    console.log("user suer ",userAuth)
+    // console.log("user suer ",userAuth)
     setSince(date.toLocaleDateString())
   },[userAuth])
   return (
