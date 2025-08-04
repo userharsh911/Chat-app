@@ -38,7 +38,6 @@ export const getMessages = async(req,res)=>{
 export const sendMessage = async(req,res)=>{
     // if(!req.user) return;
     const recieverId = req.params;
-    console.log("user req :",req.user)
     const senderId = req.user._id;
     const {text,image} = req.body;
     try {
@@ -52,7 +51,7 @@ export const sendMessage = async(req,res)=>{
         }
         const senderMessage = await new Message({
             senderId,
-            recieverId,
+            recieverId:recieverId.id,
             text,
             image:imageUrl?.secure_url
         });
