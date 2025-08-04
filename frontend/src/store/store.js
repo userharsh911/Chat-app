@@ -3,7 +3,7 @@ import axiosApi from "../api/axiosApi";
 import toast from "react-hot-toast";
 import {io} from "socket.io-client";
 
-const BASE_URL = import.meta.env.MODE=="development" ? "http://localhost:3002/api" : "/";
+const BASE_URL = import.meta.env.MODE=="development" ? "http://localhost:3002" : "/";
 
 const useBearStore = create((set,get)=>({
     userAuth:false,
