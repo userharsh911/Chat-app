@@ -97,7 +97,7 @@ const Signup = () => {
                   {...register('password', {
                     required: { value: true, message: "Password can't be empty" },
                     pattern: {
-                      value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                      value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#/<>.,;'-+$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                       message: "Password must be 8+ chars, include uppercase, lowercase, number & special character"
                     }
                   })}
