@@ -6,7 +6,7 @@ const createJSON_token = (userid,res)=>{
         maxAge: 2*24*60*60*100,
         httpOnly:true,
         sameSite: 'strict',
-        secure: process.env.JWT_SECURE !="developement"
+        secure: process.env.NODE_ENV !="developement"
     })
     return token;
 }
