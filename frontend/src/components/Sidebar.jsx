@@ -18,7 +18,7 @@ const Sidebar = () => {
 
 
   return (
-    <aside className={`overflow-hidden ${showUserSideBar ? '@md:w-2/5 w-full px-3' : 'hidden @md:w-2/5 @md:block px-3'}`}>
+    <aside className={`overflow-hidden ${showUserSideBar ? '@md:w-2/5 w-full px-3' : 'hidden @md:w-2/5 @md:block px-3'} bg-content bg-base-200 h-full rounded-lg shadow-lg`}>
         <div className='flex gap-3 pt-3 text-xl items-center text-base-content'>
             <div><Contact /></div>
             <p className='font-semibold '>Contacts</p>
@@ -40,7 +40,7 @@ const Sidebar = () => {
                     className="toggle toggle-accent" 
                     onClick={()=>setCheckOnline(val=>!val)}
                 />
-                <p className=' font-semibold flex gap-1 text-accent'>Online <span className='@xl:block hidden'>users ({onlineUserIds.length-1}) </span></p>
+                <p className=' font-semibold flex gap-1 text-warning'>Online <span className='@xl:block hidden'>users ({onlineUserIds.length-1}) </span></p>
             </label>
             
         </div> 
@@ -74,7 +74,7 @@ const Sidebar = () => {
                         </div>
                         <div className="">
                             <div className="card-body">
-                                <h2 className="card-title text-primary text-pretty">{user.fullname}</h2>
+                                <h2 className="card-title text-base-content text-pretty">{user.fullname}</h2>
                             </div>
                         </div>
                     </button>
