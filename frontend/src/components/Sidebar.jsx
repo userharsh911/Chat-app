@@ -18,7 +18,7 @@ const Sidebar = () => {
 
 
   return (
-    <aside className={`${showUserSideBar ? '@md:w-2/5 w-full px-3' : 'hidden @md:w-2/5 @md:block px-3'}`}>
+    <aside className={`overflow-hidden ${showUserSideBar ? '@md:w-2/5 w-full px-3' : 'hidden @md:w-2/5 @md:block px-3'}`}>
         <div className='flex gap-3 pt-3 text-xl items-center text-base-content'>
             <div><Contact /></div>
             <p className='font-semibold '>Contacts</p>
@@ -54,7 +54,7 @@ const Sidebar = () => {
             )
         }
         </div>
-        <div className='overflow-y-auto h-[90%] '>
+        <div className='overflow-y-auto h-[85%] '>
             <div className='flex flex-col gap-4 '>
         {
                 allUser?.map(user=>(
