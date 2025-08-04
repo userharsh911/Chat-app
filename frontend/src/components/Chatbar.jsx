@@ -1,7 +1,7 @@
 import React from 'react'
 import MessageNav from './MessageNav'
 import SendMessages from './SendMessages'
-import userImage from "/user.png"
+import userImage from "../assets/user.png"
 import { useEffect } from 'react'
 import useBearStore from '../store/store'
 import useMessages from '../store/message.store'

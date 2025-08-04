@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { FaUserCircle } from "react-icons/fa";
 import { Calendar, Mail } from 'lucide-react';
 import { FaCamera } from "react-icons/fa";
 import useBearStore from '../store/store'
-import userImage from '/user.png'
+import userImage from '../assets/user.png'
 const Profile = () => {
   const [since, setSince] = useState('')
   const [file, setFile] = useState('')
@@ -16,7 +15,7 @@ const Profile = () => {
       reader.onload = async()=>{
         const base64Image = reader.result
         setImage(base64Image)
-        const user = await userProfile(base64Image);
+        await userProfile(base64Image);
 
       }
     }

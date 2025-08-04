@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import useBearStore from '../store/store'
-import userImage from "/user.png"
+import userImage from "../assets/user.png"
 import useMessages from '../store/message.store'
 import { useState } from 'react'
 import { SquareX } from 'lucide-react';

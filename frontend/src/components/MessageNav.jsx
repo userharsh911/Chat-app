@@ -1,6 +1,6 @@
 import React from 'react'
 import useMessages from '../store/message.store'
-import userImage from "/user.png"
+import userImage from "../assets/user.png"
 import { ImCross } from "react-icons/im";
 import useBearStore from '../store/store';
 const MessageNav = () => {
