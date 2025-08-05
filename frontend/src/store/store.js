@@ -2,7 +2,7 @@ import {create} from "zustand"
 import axiosApi from "../api/axiosApi";
 import toast from "react-hot-toast";
 import {io} from "socket.io-client";
-
+import useMessages from "./message.store";
 const BASE_URL = import.meta.env.MODE=="development" ? "http://localhost:3002" : "/";
 
 const useBearStore = create((set,get)=>({
@@ -10,9 +10,11 @@ const useBearStore = create((set,get)=>({
     loader:true,
     allUser: null,
     onlineUserIds: [],
+    searchedUsers:[],
+    requestedSentOrReceiveUser:[],
     showUserSideBar: true,
     socket: null,
-
+    setSearchedUser:(val)=>set({searchedUsers:val}),
     setShowUserSideBar:(val)=>set({showUserSideBar:val}),
     ischeckAuth:async()=>{
         try {
@@ -107,6 +109,61 @@ const useBearStore = create((set,get)=>({
         }
     },
 
+    searchUserByName:async(name)=>{
+        try {
+            const res = await axiosApi.get(`/messages/users/${name}`)
+            set({searchedUsers:res.data})
+            return res.data
+        } catch (error) {
+            console.log("error while searching users : ",error.message)
+            toast.error(error.response.data.message)
+        }
+
+    },
+
+    getUserSendRequest:async()=>{
+        try {
+            const res = await axiosApi.get('/messages/users/requests/receive');
+            set({requestedSentOrReceiveUser:res.data})
+            return res.data
+        } catch (error) {
+            console.log("error while getting",error.message)
+            // toast.error()
+        }
+    },
+
+    sendReq:async(userid)=>{
+        try {
+            const res = await axiosApi.post(`/requests/send/${userid}`);
+            set({userAuth:res.data.user})
+            toast.success(`friend request send to ${res.data.sendTo}`)
+        } catch (error) {
+            console.log("error while sending request ",error.message)
+            toast.error(error.response.data.message)
+        }
+    },
+    
+    acceptReq:async (id)=>{
+        try {
+            const res = await axiosApi.put(`/requests/accept/${id}`)
+            set({userAuth:res.data.accept})
+            toast.success(`You accepted ${res.data.whichUser} friend request`)
+        } catch (error) {
+            console.log("error accepting friend request ",error.message)
+            toast.error(error.response.data.message)
+        }
+    },
+    rejectReq:async (id)=>{
+        try {
+            const res = await axiosApi.put(`/requests/reject/${id}`)
+            set({userAuth:res.data.reject})
+            toast.error(`You rejected ${res.data.whichUser.fullname} friend request`)
+        } catch (error) {
+            console.log("error accepting friend request ",error.message)
+            toast.error(error.response.data.message)
+        }
+    },
+
     connectSocket:()=>{
         const {userAuth} = get()
         if(!userAuth || get().socket?.connected) return;
@@ -121,6 +178,35 @@ const useBearStore = create((set,get)=>({
         socket.on('onlineUsers',(userIds)=>{
             set({onlineUserIds:userIds})
             // console.log("online users ",get().onlineUserIds)
+        })
+        socket.on("someoneSendMessage",async({sender,getter})=>{
+            set({userAuth:getter})
+            const res = await get().getUserSendRequest()
+            set({requestedSentOrReceiveUser:res})
+            toast.success(`${sender.fullname} sends you friend request`)
+        })
+        socket.on("someoneAcceptRequest",async({sender,getter})=>{
+            set({userAuth:getter})
+            const res = await get().getUserSendRequest()
+            set({requestedSentOrReceiveUser:res})
+            
+            toast.success(`${sender.fullname} accepts your friend request`)
+        })
+        socket.on("someoneRejectRequest",async({sender,getter})=>{
+            set({userAuth:getter})
+            const res = await get().getUserSendRequest()
+            set({requestedSentOrReceiveUser:res})
+            
+            toast.error(`${sender.fullname} rejects your friend request`)
+        })
+        socket.on("updateMessage",({newMessage,sendUser})=>{
+            const selectedUserId = useMessages.getState().selectedUser?._id;
+            if(newMessage.senderId!=selectedUserId){
+                toast(`${sendUser.fullname} sends you a message.`, {
+                    icon: '😀',
+                });
+            }
+            
         })
     },
 

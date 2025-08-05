@@ -6,13 +6,18 @@ import { useState } from 'react'
 import { SquareX } from 'lucide-react';
 import { Contact } from 'lucide-react';
 const Sidebar = () => {
-    const {getAllUsers,allUser,onlineUserIds,showUserSideBar,setShowUserSideBar} = useBearStore(state=>state)
+    const {getAllUsers,allUser,onlineUserIds,userAuth,showUserSideBar,setShowUserSideBar} = useBearStore(state=>state)
     const {setSelectedUser} = useMessages(state=>state)
     const [checkOnline, setCheckOnline] = useState(false)
+    const [actualOnline,setActualOnline] = useState([])
     useEffect(()=>{
         
         getAllUsers()
     },[getAllUsers,onlineUserIds])
+
+    useEffect(()=>{
+        onlineUserIds?.length > 0 && setActualOnline(onlineUserIds.filter(id => userAuth.friends.includes(id)))
+    },[onlineUserIds, userAuth])
 
     // console.log('online users ',onlineUserIds)
 
@@ -40,7 +45,7 @@ const Sidebar = () => {
                     className="toggle toggle-accent" 
                     onClick={()=>setCheckOnline(val=>!val)}
                 />
-                <p className=' font-semibold flex gap-1 text-warning'>Online <span className='@xl:block hidden'>users ({onlineUserIds.length-1}) </span></p>
+                <p className=' font-semibold flex gap-1 text-warning'>Online <span className='@xl:block hidden'>users ({actualOnline.length}) </span></p>
             </label>
             
         </div> 

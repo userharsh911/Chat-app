@@ -7,6 +7,7 @@ import message from '../routes/message.route.js';
 import cors from "cors"
 import {app, server,io} from '../libs/socket.js';
 import path from "path"
+import userRequest from '../routes/requests.routes.js';
 
 
 dotenv.config()
@@ -22,6 +23,7 @@ app.use(cors({
 
 app.use('/api/auth',authRouter)
 app.use('/api/messages',message)
+app.use('/api/requests',userRequest)
 
 if(process.env.NODE_ENV==="production"){
     app.use(express.static(path.join(__dirname,"../frontend/dist")))
@@ -34,6 +36,6 @@ if(process.env.NODE_ENV==="production"){
 mongoose.connect(process.env.MONGO_DB_API)
 .then(()=>{ 
     server.listen(process.env.PORT,()=>{
-        // console.log("the server is on port "+process.env.PORT)
+        console.log("the server is on port "+process.env.PORT)
     })
 })

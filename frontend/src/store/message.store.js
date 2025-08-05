@@ -49,8 +49,11 @@ const useMessages = create((set,get)=>({
         const {selectedUser} = get()
         if(!selectedUser) return;
         const socket = useBearStore.getState().socket;
-        socket.on("updateMessage",(newMessage)=>{
+        socket.on("updateMessage",({newMessage})=>{
             // console.log("this message is new ",newMessage)
+            
+            // if(true){
+            // }
             if(newMessage.senderId==get().selectedUser._id){
                 set({messages:[...get().messages,newMessage]})
             }

@@ -25,6 +25,11 @@ const Header = () => {
             active:!userAuth,
         },
         {
+            path:"/add-friends",
+            render:<div className='flex items-center gap-1'><FaUserPlus /> Add friends </div>,
+            active:userAuth,
+        },
+        {
             path:"/profile",
             render:<div className='flex items-center gap-1'><FaUserPen /> Profile</div>,
             active:userAuth,

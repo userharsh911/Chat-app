@@ -14,6 +14,17 @@ const userSchema = mongoose.Schema({
         type:String,
         required:true,
     },
+    requests:{
+        receive:[{
+            type:mongoose.Schema.Types.ObjectId
+        }],
+        send:[{
+            type:mongoose.Schema.Types.ObjectId
+        }]
+    },
+    friends:[{
+        type:mongoose.Schema.Types.ObjectId,
+    }],
     profilepic:{
         type:String
     },

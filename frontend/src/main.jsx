@@ -9,6 +9,7 @@ import Signup from './pages/Signup.jsx'
 import Authenticated from './components/Authenticated/Authenticated.jsx'
 import Profile from './pages/Profile.jsx'
 import Settings from './pages/Settings.jsx'
+import FriendRequest from './pages/FriendRequest.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
       <Route path='login' element={<Authenticated auth={false}><Login/></Authenticated>}/>
       <Route path='signup' element={<Authenticated auth={false}><Signup/></Authenticated>}/>
       <Route path='profile' element={<Authenticated auth={true}><Profile/></Authenticated>}/>
+      <Route path='add-friends' element={<Authenticated auth={true}><FriendRequest/></Authenticated>}/>
       <Route path='settings' element={<Settings/>}/>
     </Route>
   )
