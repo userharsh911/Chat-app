@@ -199,7 +199,7 @@ const useBearStore = create((set,get)=>({
             
             toast.error(`${sender.fullname} rejects your friend request`)
         })
-        socket.on("updateMessage",({newMessage,sendUser})=>{
+        socket.on("updateNotification",({newMessage,sendUser})=>{
             const selectedUserId = useMessages.getState().selectedUser?._id;
             if(newMessage.senderId!=selectedUserId){
                 toast(`${sendUser.fullname} sends you a message.`, {

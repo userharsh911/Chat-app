@@ -67,6 +67,7 @@ export const sendMessage = async(req,res)=>{
         const id = receiverSocketId(recieverId.id)
         if(id){
             io.to(id).emit("updateMessage",{newMessage:senderMessage,sendUser:sendUser})
+            io.to(id).emit("updateNotification",{newMessage:senderMessage,sendUser:sendUser})
         }
 
 
