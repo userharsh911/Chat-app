@@ -32,7 +32,7 @@ export const sendRequest = async (req,res)=>{
 
         return res.status(200).json({user:updatedSendFromUser,sendTo:sendToUser.fullname})
     } catch (error) {
-        console.log("internal error ",error.message)
+        // console.log("internal error ",error.message)
         res.status(400).json({message:"internal server error"})
     }
     

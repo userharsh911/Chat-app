@@ -46,7 +46,7 @@ export const sendMessage = async(req,res)=>{
     const {text,image} = req.body;
     try {
         const sendUser = await User.findById(senderId)
-        console.log("user use ruser : ",sendUser)
+        // console.log("user use ruser : ",sendUser)
         if(!sendUser) return res.status(500).json({message:"fatal error"})
         // base64Image
         let imageUrl;
@@ -91,7 +91,7 @@ export const getUsersByName = async(req,res)=>{
         if(!searchedUsers){
             return res.status(402).json({message:"users not found"})
         }
-        console.log(searchedUsers)
+        // console.log(searchedUsers)
         return res.status(200).json(searchedUsers)
 
     } catch (error) {
@@ -101,17 +101,17 @@ export const getUsersByName = async(req,res)=>{
 
 export const getUserByIds = async(req,res)=>{
     const IDs_1 = req.user.requests.send
-    console.log("ids 1 ",IDs_1)
+    // console.log("ids 1 ",IDs_1)
     const IDs_2 = req.user.requests.receive
     try {
         const IDs = [...IDs_1,...IDs_2];
-        console.log("andar")
-        console.log("hua kuch")
+        // console.log("andar")
+        // console.log("hua kuch")
         const users = await User.find({
             _id:{$in:IDs}
         })
         return res.status(200).json(users)
     } catch (error) {
-        console.log("eror ",error)
+        // console.log("eror ",error)
     }
 }

@@ -60,7 +60,7 @@ export const postSignup = async(req,res)=>{
                 return res.status(201).json(user)
             }
         }else{
-            console.log("error while encrypting password ")
+            // console.log("error while encrypting password ")
             res.status(500).json({message:"try again"})
         }
     } catch (error) {
@@ -96,7 +96,7 @@ export const updateProfile = async(req,res)=>{
         if(user) return res.status(200).json(user)
         
     } catch (error) {
-        console.log("error while uploading image ",error)
+        // console.log("error while uploading image ",error)
         return res.status(500).json({message:"internal server error"})
     }
 }
@@ -105,7 +105,7 @@ export const checkAuth = (req,res)=>{
     try {
         return res.status(200).json(req.user)
     } catch (error) {
-        console.log("Error in chechAuthController ",error)
+        // console.log("Error in chechAuthController ",error)
         return res.status(500).json({message:"Internal server error"})
     }
 }

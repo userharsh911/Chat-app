@@ -115,7 +115,7 @@ const useBearStore = create((set,get)=>({
             set({searchedUsers:res.data})
             return res.data
         } catch (error) {
-            console.log("error while searching users : ",error.message)
+            // console.log("error while searching users : ",error.message)
             toast.error(error.response.data.message)
         }
 
@@ -127,8 +127,8 @@ const useBearStore = create((set,get)=>({
             set({requestedSentOrReceiveUser:res.data})
             return res.data
         } catch (error) {
-            console.log("error while getting",error.message)
-            // toast.error()
+            // console.log("error while getting",error.message)
+            toast.error(error.response.data.message)
         }
     },
 
@@ -138,7 +138,7 @@ const useBearStore = create((set,get)=>({
             set({userAuth:res.data.user})
             toast.success(`friend request send to ${res.data.sendTo}`)
         } catch (error) {
-            console.log("error while sending request ",error.message)
+            // console.log("error while sending request ",error.message)
             toast.error(error.response.data.message)
         }
     },
@@ -149,7 +149,7 @@ const useBearStore = create((set,get)=>({
             set({userAuth:res.data.accept})
             toast.success(`You accepted ${res.data.whichUser} friend request`)
         } catch (error) {
-            console.log("error accepting friend request ",error.message)
+            // console.log("error accepting friend request ",error.message)
             toast.error(error.response.data.message)
         }
     },
@@ -159,7 +159,7 @@ const useBearStore = create((set,get)=>({
             set({userAuth:res.data.reject})
             toast.error(`You rejected ${res.data.whichUser.fullname} friend request`)
         } catch (error) {
-            console.log("error accepting friend request ",error.message)
+            // console.log("error accepting friend request ",error.message)
             toast.error(error.response.data.message)
         }
     },
