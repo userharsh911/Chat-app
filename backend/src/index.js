@@ -35,7 +35,10 @@ if(process.env.NODE_ENV==="production"){
 
 mongoose.connect(process.env.MONGO_DB_API)
 .then(()=>{ 
-    server.listen(process.env.PORT,()=>{
+    server.listen(process.env.PORT,'0.0.0.0',()=>{
         // console.log("the server is on port "+process.env.PORT)
     })
+
+    server.keepAliveTimeout = 120 * 1000;
+    server.headersTimeout = 120 * 1000;
 })
