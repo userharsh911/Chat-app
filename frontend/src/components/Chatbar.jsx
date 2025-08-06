@@ -49,7 +49,7 @@ const Chatbar = () => {
                         {item?.senderId==userAuth._id ? userAuth.fullname : selectedUser.fullname}
                     </div>
                     <div className="chat-bubble bg-primary text-primary-content">
-                        <img src={item?.image} alt="" className='max-h-40' />
+                        <img src={item?.image} alt="" className={`${item?.image ? 'block' : 'hidden'} max-h-60 max-w-70 min-w-30 min-h-40`} />
                         <p>{item?.text}</p>
                     </div>
                     <div className="chat-footer opacity-70 ">
