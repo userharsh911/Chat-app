@@ -7,11 +7,12 @@ import useBearStore from '../store/store'
 import useMessages from '../store/message.store'
 import dateTime from '../constant/dateTime'
 import { useRef } from 'react'
+import { Minimize2 } from 'lucide-react';
 import SkeletonOfMessage from './SkeletonOfMessage'
 
 const Chatbar = () => {
     const scrollRef = useRef(null)
-    const {getMessages, selectedUser,isMessageGet,messages,subscribeToMessage,unSubscribeFromMessage} = useMessages(state=>state)
+    const {getMessages, selectedUser,setImagePreview,imagePreview,isMessageGet,showFullImage,messages,setShowFullImage,subscribeToMessage,unSubscribeFromMessage} = useMessages(state=>state)
     const {userAuth, showUserSideBar} = useBearStore(state=>state)
     useEffect(()=>{
         getMessages(selectedUser._id)
@@ -29,7 +30,10 @@ const Chatbar = () => {
   if(!isMessageGet)return (
     <div className={` ${showUserSideBar ? 'block' : ''} w-full pb-4 bg-base-content overflow-hidden`}>
         <MessageNav/>
-        <div className='w-full h-4/5 bg-base-content overflow-y-scroll text-base-300'>
+        
+        {
+            !showFullImage ? (
+                <div className='w-full h-4/5 bg-base-content overflow-y-scroll text-base-300'>
         {messages?.length==0 ? (
             <div className='w-full h-full flex justify-center items-center'>
                 <p className='text-info font-semibold'>No messages yet</p>
@@ -49,7 +53,10 @@ const Chatbar = () => {
                         {item?.senderId==userAuth._id ? userAuth.fullname : selectedUser.fullname}
                     </div>
                     <div className="chat-bubble bg-primary text-primary-content">
-                        <img src={item?.image} alt="" className={`${item?.image ? 'block' : 'hidden'} max-h-60 max-w-70 min-w-30 min-h-40`} />
+                        <img onClick={()=>{
+                            setShowFullImage(true); 
+                            setImagePreview(item?.image);
+                        }} src={item?.image} alt="" className={`${item?.image ? 'block' : 'hidden'} cursor-zoom-in max-h-60 max-w-70 min-w-30 min-h-40`} />
                         <p>{item?.text}</p>
                     </div>
                     <div className="chat-footer opacity-70 ">
@@ -59,7 +66,34 @@ const Chatbar = () => {
             ))
         }
         <div ref={scrollRef}></div>
-        </div>
+                </div>
+            ) : (
+                <div className="w-full h-4/5 bg-primary-content overflow-auto text-base-300">
+                    <div className="flex w-full justify-end pe-3 pt-3">
+                        <Minimize2
+                            onClick={()=>{
+                                setShowFullImage(false)
+                                setImagePreview(false)
+                            }}
+                            className="cursor-pointer"
+                        />
+                    </div>
+                    <div className=" flex w-full h-full justify-center py-4">
+                        <img
+                            onClick={()=>{
+                                setShowFullImage(false); 
+                                setImagePreview(false);
+                            }}
+                            src={imagePreview} 
+                            alt="image"
+                            className="cursor-zoom-out" 
+                        />
+                            
+                    </div>
+                </div>
+            )
+        }
+
         <SendMessages/>
     </div>
   )

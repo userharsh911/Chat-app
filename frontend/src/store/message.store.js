@@ -5,10 +5,18 @@ import useBearStore from "./store";
 const useMessages = create((set,get)=>({
     messages: [],
     selectedUser:null,
+    showFullImage:false,
+    imagePreview:null,
     isMessageSent : false,
     isMessageGet:false,
     setSelectedUser:(user)=>{
         set({selectedUser:user})
+    },
+    setImagePreview:(url)=>{
+        set({imagePreview:url})
+    },
+    setShowFullImage:(val)=>{
+        set({showFullImage:val})
     },
     getMessages:async(id)=>{
         // console.log('call')
