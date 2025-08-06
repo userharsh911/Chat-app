@@ -29,6 +29,7 @@ const Chatbar = () => {
 //    console.log("mess mess ",messages)
   if(!isMessageGet)return (
     <div className={` ${showUserSideBar ? 'block' : ''} w-full pb-4 bg-base-content overflow-hidden`}>
+        <img src="" alt="" />
         <MessageNav/>
         
         {
@@ -75,7 +76,7 @@ const Chatbar = () => {
                                 setShowFullImage(false)
                                 setImagePreview(false)
                             }}
-                            className="cursor-pointer"
+                            className="cursor-pointer text-base-100"
                         />
                     </div>
                     <div className=" flex w-full h-full justify-center py-4">
@@ -84,9 +85,10 @@ const Chatbar = () => {
                                 setShowFullImage(false); 
                                 setImagePreview(false);
                             }}
+                            
                             src={imagePreview} 
                             alt="image"
-                            className="cursor-zoom-out" 
+                            className="cursor-zoom-out object-contain" 
                         />
                             
                     </div>
