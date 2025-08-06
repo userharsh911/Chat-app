@@ -44,7 +44,6 @@ const Chatbar = () => {
           showUserSideBar ? "block" : ""
         } w-full pb-4 bg-base-content overflow-hidden`}
       >
-        <img src="" alt="" />
         <MessageNav />
 
         {!showFullImage ? (
