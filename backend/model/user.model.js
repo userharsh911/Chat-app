@@ -28,6 +28,7 @@ const userSchema = mongoose.Schema({
     profilepic:{
         type:String
     },
+    profilePublicId:String,
     
 },{timestamps:true})
 

@@ -83,20 +83,24 @@ export const postLogout = (req,res)=>{
 // handle update profile <<<---------------------------------->>>
 export const updateProfile = async(req,res)=>{
     const {profilePic} = req.body;
-    const userId = req.user;
+    const userMain = req.user;
     if(!profilePic) return res.status(404).json({message:"image not found"})
     try {
+        if(userMain.profilePublicId){
+            const dest = await cloudinary.uploader.destroy(userMain.profilePublicId)
+            if(!dest) return res.status(400).json({message:"Internal server error:try again"})
+        }
         const uploadResult = await cloudinary.uploader.upload(profilePic)
         if(!uploadResult) return res.status(400).json({message:"image not upload"})
 
-        const user = await User.findByIdAndUpdate(userId,{
-            profilepic: uploadResult.secure_url 
+        const user = await User.findByIdAndUpdate(userMain._id,{
+            profilepic: uploadResult.secure_url,
+            profilePublicId: uploadResult.public_id
         },{new:true});
 
         if(user) return res.status(200).json(user)
         
     } catch (error) {
-        // console.log("error while uploading image ",error)
         return res.status(500).json({message:"internal server error"})
     }
 }
