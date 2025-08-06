@@ -40,6 +40,7 @@ const SendMessages = () => {
             
         }else{
             toast.error("you don't have anything to send")
+            setIsMessageSent(false)
         }
         } catch (error) {
             toast(error.message)
