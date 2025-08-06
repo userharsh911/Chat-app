@@ -7,6 +7,6 @@ const daisyThemes = [
   "dracula", "cmyk", "autumn", "business",
   "acid", "lemonade", "night", "coffee",
   "winter", "dim", "nord", "sunset",
-  "caramellatte", "abyss", "silk","capdog","rainymoon","hotcity","basedkitten"
+  "caramellatte", "abyss", "silk","capdog","rainymoon","hotcity","basedkitten","slaybtw"
 ];
 export default daisyThemes;

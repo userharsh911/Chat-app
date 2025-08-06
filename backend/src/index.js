@@ -5,7 +5,7 @@ import authRouter from '../routes/auth.route.js';
 import cookieParser from "cookie-parser"
 import message from '../routes/message.route.js';
 import cors from "cors"
-import {app, server,io} from '../libs/socket.js';
+import {app, server} from '../libs/socket.js';
 import path from "path"
 import userRequest from '../routes/requests.routes.js';
 
@@ -35,7 +35,7 @@ if(process.env.NODE_ENV==="production"){
 
 mongoose.connect(process.env.MONGO_DB_API)
 .then(()=>{ 
-    server.listen(process.env.PORT,'0.0.0.0',()=>{
+    server.listen(process.env.PORT || 5000,'0.0.0.0',()=>{
         // console.log("the server is on port "+process.env.PORT)
     })
 
