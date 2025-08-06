@@ -53,8 +53,8 @@ const Chatbar = () => {
                         <img src={item?.image} alt="" className='max-h-40' />
                         <p>{item?.text}</p>
                     </div>
-                    <div className="chat-footer opacity-50 ">
-                        <time className="text-xs opacity-50 text-primary-content">{dateTime(item.createdAt)}</time>
+                    <div className="chat-footer opacity-70 ">
+                        <time className="text-xs opacity-70 text-base-100">{dateTime(item.createdAt)}</time>
                     </div>
                 </div>
             ))

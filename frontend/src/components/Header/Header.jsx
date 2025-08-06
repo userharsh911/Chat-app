@@ -47,7 +47,7 @@ const Header = () => {
     }
   return (
     <nav className='flex justify-between relative gap-9 z-20 items-center bg-base-300 px-4 py-2'>
-        <NavLink to={'/'} className={({isActive})=>isActive ? "border-b-4 border-e-base-200 px-4 rounded-2xl" : "px-4"}>
+        <NavLink  to={'/'} className={({isActive})=>isActive ? "border-b-4 border-e-base-200 px-4 rounded-2xl" : "px-4"}>
             <div className='flex items-center gap-1 font-semibold'>
                 <BsChatRightTextFill /> chat-ON 
             </div>
@@ -77,8 +77,8 @@ const Header = () => {
                 }
             </button>
         </div>
-        <div className={`flex flex-col gap-6 py-10 fixed duration-200 ${toggleView ? 'left-0' : 'left-[-100%]'} top-0  bg-success-content w-3/4 h-[100vh] items-center gap-3 sm:hidden`}>
-            <NavLink to={'/'} className={({isActive})=>isActive ? "border-b-4 border-e-base-200 px-4 rounded-2xl" : "px-4"}>
+        <div className={`flex flex-col gap-6 py-10 fixed duration-200 ${toggleView ? 'left-0' : 'left-[-100%]'} top-0  bg-accent text-accent-content w-3/4 h-[100vh] items-center gap-3 sm:hidden`}>
+            <NavLink onClick={()=>setToggleView((val)=>!val)} to={'/'} className={({isActive})=>isActive ? "border-b-4 border-e-base-200 px-4 rounded-2xl" : "px-4"}>
                 <div className='flex items-center gap-1 font-semibold'>
                     <BsChatRightTextFill /> chat-ON 
                 </div>
@@ -97,7 +97,7 @@ const Header = () => {
                     <button onClick={()=>{
                         logout();
                         setToggleView((val)=>!val)
-                    }} className='text-xl self-center bg-base-200 p-3 cursor-pointer rounded-full'>
+                    }} className='text-xl self-center bg-base-content p-3 ps-4 cursor-pointer rounded-full'>
                         <TbLogout />
                     </button>
                 )

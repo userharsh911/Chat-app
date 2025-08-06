@@ -23,18 +23,18 @@ const Sidebar = () => {
 
 
   return (
-    <aside className={`overflow-hidden ${showUserSideBar ? '@md:w-2/5 w-full px-3' : 'hidden @md:w-2/5 @md:block px-3'} bg-content bg-base-200 h-full rounded-lg shadow-lg`}>
-        <div className='flex gap-3 pt-3 text-xl items-center text-base-content'>
+    <aside className={`overflow-hidden ${showUserSideBar ? '@md:w-2/5 w-full px-3' : 'hidden @md:w-2/5 @md:block px-3'} h-full bg-neutral rounded-lg shadow-lg`}>
+        <div className='flex gap-3 pt-3 text-xl items-center text-neutral-content'>
             <div><Contact /></div>
             <p className='font-semibold '>Contacts</p>
         </div>
         <div className='mb-2'>
-            <div className='w-full @md:hidden block bg-primary'>
+            <div className='w-full @md:hidden block'>
             <div
                 onClick={()=>setShowUserSideBar(!showUserSideBar)}
                 className=' pt-2 w-full flex flex-col'
             >
-                <div><SquareX className='float-end' /></div>
+                <div><SquareX className='float-end text-neutral-content' /></div>
             </div>
         </div>
         <div className='w-full pt-2 flex justify-between'>
@@ -42,17 +42,17 @@ const Sidebar = () => {
                 <input 
                     type="checkbox" 
                     id="onlineuser"
-                    className="toggle toggle-accent" 
+                    className="toggle toggle-neutral text-neutral-500 bg-neutral-content" 
                     onClick={()=>setCheckOnline(val=>!val)}
                 />
-                <p className=' font-semibold flex gap-1 text-warning'>Online <span className='@xl:block hidden'>users ({actualOnline.length}) </span></p>
+                <p className=' font-semibold flex gap-1 text-neutral-content '>Online <span className=''>({actualOnline.length}) </span></p>
             </label>
             
         </div> 
         {
             checkOnline && (
                 onlineUserIds?.length<=1 && (
-                <div className='w-full text-center text-base-content font-semibold mt-2'>
+                <div className='w-full text-center text-neutral-content opacity-65 font-semibold mt-2'>
                     <p className=''>No online user at this time</p>
                 </div>
             )
@@ -73,11 +73,11 @@ const Sidebar = () => {
                         // onClick={()=>}
                     >
                         <div className={`avatar ${onlineUserIds?.includes(user._id) ? 'avatar-online':'avatar-offline'}`}>
-                            <div className="w-10 rounded-full">
+                            <div className="w-10 rounded-full border-2">
                                 <img src={user.profilepic || userImage} />
                             </div>
                         </div>
-                        <div className="">
+                        <div className=" @md:hidden @xl:block">
                             <div className="card-body">
                                 <h2 className="card-title text-base-content text-pretty">{user.fullname}</h2>
                             </div>
