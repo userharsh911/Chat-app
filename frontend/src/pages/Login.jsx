@@ -88,7 +88,7 @@ const Login = () => {
       </div>
       <div className='w-full hidden lg:w-1/2 bg-gray-950 md:flex items-center flex-col justify-center p-6'>
         <SignupSkeleton />
-          <p class="text-center text-transparent mt-5 bg-clip-text bg-gradient-to-r from-secondary to-primary font-semibold">
+          <p className="text-center text-transparent mt-5 bg-clip-text bg-gradient-to-r from-secondary to-primary font-semibold">
             <span className='text-yellow-400'>🔑</span> Login to unlock your personalized experience
           </p>
       </div>

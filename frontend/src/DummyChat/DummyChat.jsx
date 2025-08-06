@@ -1,6 +1,6 @@
-import { MoreVertical, Phone, Send } from 'lucide-react'
+import { Send } from 'lucide-react'
 import React from 'react'
-
+import { ImCross } from "react-icons/im";
 const DummyChat = () => {
   return (
     <div className="max-w-sm mx-auto rounded-lg shadow-lg overflow-hidden bg-base-100">
@@ -21,7 +21,7 @@ const DummyChat = () => {
           </div>
         </div>
         <div className="flex space-x-2">
-          <MoreVertical className="w-5 h-5" />
+          <ImCross />
         </div>
       </div>
 

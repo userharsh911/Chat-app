@@ -15,7 +15,7 @@ const MessageNav = () => {
                 </div>
             </div>
             <div className='font-semibold capitalize'>
-                {selectedUser?.fullname} is <span>{onlineUserIds.includes(selectedUser._id) ? 'Online' : 'Offline'}</span>
+                {selectedUser?.fullname} <br /> <span className='text-sm opacity-75'>{onlineUserIds.includes(selectedUser._id) ? 'Online' : 'Offline'}</span>
             </div>
         </div>
         <div>

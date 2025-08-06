@@ -1,30 +1,34 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Calendar, Mail } from 'lucide-react';
 import { FaCamera } from "react-icons/fa";
 import useBearStore from '../store/store'
 import userImage from '../assets/user.png'
 const Profile = () => {
   const [since, setSince] = useState('')
-  const [file, setFile] = useState('')
   const [image,setImage] = useState(null)
+  const [loading,setLoading] = useState(false)
+  const profile = useRef(null)
   const {userAuth,userProfile} = useBearStore(state=>state)
-  useEffect(()=>{
+
+  const updateProfilePic = (file)=>{
+    console.log(file)
     if(file){
+      setLoading(true)
       const reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = async()=>{
         const base64Image = reader.result
+        profile.current.value = ""
         setImage(base64Image)
         await userProfile(base64Image);
-
+        setLoading(false)
       }
     }
     
-  },[file,userProfile])
+  }
   // console.log(userAuth)
   useEffect(()=>{
     const date = new Date(userAuth?.createdAt)
-    // console.log("user suer ",userAuth)
     setSince(date.toLocaleDateString())
   },[userAuth])
   return (
@@ -43,16 +47,17 @@ const Profile = () => {
                   </div>
                 </div>
               </div>
-              <div className='absolute -bottom-28 left-[60%] transform text-4xl'>
-                  <label htmlFor="image" className='cursor-pointer text-shadow-base-300'>
+              <div className='absolute -bottom-20 left-[60%] transform text-4xl'>
+                  <label htmlFor={loading? "":'image'} className={`${loading ? 'cursor-progress' : 'cursor-pointer'} text-shadow-base-300`}>
                     <FaCamera />
                     <input 
                       type="file" 
                       accept='image/*'
                       name='profilePic'
-                      className='h-0 w-0'
+                      className='hidden'
+                      ref={profile}
                       id='image'
-                      onChange={(e)=>setFile(e.target.files[0])}
+                      onChange={(e)=>updateProfilePic(e.target.files[0])}
                     />
                   </label>
                 </div>
