@@ -28,12 +28,14 @@ const SendMessages = () => {
                 reader.readAsDataURL(image[0])
                 reader.onload = async()=>{
                     base64Image = reader.result;
+                    console.log("before")
                     setValue("image","");
                     await sendMessages({text,image:base64Image})
+                    setIsMessageSent(false)
                 }
             }else{
-                // console.log(data)
                 await sendMessages({text,image:null})
+                setIsMessageSent(false)
             }
             
         }else{
@@ -41,8 +43,6 @@ const SendMessages = () => {
         }
         } catch (error) {
             toast(error.message)
-        }finally{
-            setIsMessageSent(false)
         }
     }
     const baseImage = watch('image')
@@ -94,8 +94,9 @@ const SendMessages = () => {
             </div>
             <div>
                 <button
-                    type='submit'
+                    type={isMessageSent ? 'button' : 'submit'}
                     className='text-2xl cursor-pointer text-base-300'
+                    
                 >
                     {isMessageSent ?  <LoaderCircle className='animate-spin'/> : <BsSend />}
                 </button>
