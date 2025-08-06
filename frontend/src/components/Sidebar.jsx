@@ -6,15 +6,20 @@ import { useState } from 'react'
 import { SquareX } from 'lucide-react';
 import { Contact } from 'lucide-react';
 import { useNavigate } from 'react-router-dom'
+import SkeletonOfMessage from './SkeletonOfMessage'
+import SidebarSkeleton from './SidebarSkeleton'
 const Sidebar = () => {
     const {getAllUsers,allUser,onlineUserIds,userAuth,showUserSideBar,setShowUserSideBar} = useBearStore(state=>state)
     const {setSelectedUser} = useMessages(state=>state)
     const [checkOnline, setCheckOnline] = useState(false)
     const [actualOnline,setActualOnline] = useState([])
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     useEffect(()=>{
-        
-        getAllUsers()
+        setLoading(true)
+        getAllUsers().then(()=>{
+            setLoading(false)
+        })
     },[getAllUsers,onlineUserIds])
 
     useEffect(()=>{
@@ -94,6 +99,13 @@ const Sidebar = () => {
                         </div>
                     </button>
                 ))
+            }
+            {
+                loading && (
+                    <div>
+                        <SidebarSkeleton/>
+                    </div>
+                )
             }
             
             </div>
