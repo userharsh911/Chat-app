@@ -88,7 +88,7 @@ const Chatbar = () => {
                       alt=""
                       className={`${
                         item?.image ? "block" : "hidden"
-                      } cursor-zoom-in max-h-60 max-w-70 min-w-30 min-h-40`}
+                      } cursor-zoom-in`}
                     />
                     <p>{item?.text}</p>
                   </div>
