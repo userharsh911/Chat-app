@@ -53,7 +53,7 @@ const Sidebar = () => {
         </div> 
         {
             checkOnline && (
-                actualOnline?.length<=1 && (
+                actualOnline?.length<1 && (
                 <div className='w-full text-center text-neutral-content opacity-65 font-semibold mt-2'>
                     <p className=''>No online user at this time</p>
                 </div>
