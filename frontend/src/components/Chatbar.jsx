@@ -34,19 +34,19 @@ const Chatbar = () => {
     if (!isMessageGet) {
       scrollRef.current?.scrollIntoView({ behavior: "auto" });
     }
-  }, [selectedUser, isMessageGet, messages,showFullImage]);
+  }, [selectedUser, isMessageGet, messages, showFullImage]);
 
   //    console.log("mess mess ",messages)
-  if (!isMessageGet)
-    return (
-      <div
-        className={` ${
-          showUserSideBar ? "block" : ""
-        } w-full pb-4 bg-base-content overflow-hidden`}
-      >
-        <MessageNav />
+  return (
+    <div
+      className={` ${
+        showUserSideBar ? "block" : ""
+      } w-full pb-4 bg-base-content overflow-hidden`}
+    >
+      <MessageNav />
 
-        {!showFullImage ? (
+      {!isMessageGet ? (
+        !showFullImage ? (
           <div className="w-full h-4/5 bg-base-content overflow-y-scroll text-base-300">
             {messages?.length == 0 ? (
               <div className="w-full h-full flex justify-center items-center">
@@ -124,17 +124,16 @@ const Chatbar = () => {
               />
             </div>
           </div>
-        )}
+        )
+      ) : (
+        <div className="w-full h-full bg-base-content ps-3 overflow-scroll text-base-300">
+          <SkeletonOfMessage />
+        </div>
+      )}
 
-        <SendMessages />
-      </div>
-    );
-  else
-    return (
-      <div className="w-full h-full bg-base-content ps-3 overflow-scroll text-base-300">
-        <SkeletonOfMessage />
-      </div>
-    );
+      <SendMessages />
+    </div>
+  );
 };
 
 export default Chatbar;
