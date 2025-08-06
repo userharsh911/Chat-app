@@ -5,11 +5,13 @@ import useMessages from '../store/message.store'
 import { useState } from 'react'
 import { SquareX } from 'lucide-react';
 import { Contact } from 'lucide-react';
+import { useNavigate } from 'react-router-dom'
 const Sidebar = () => {
     const {getAllUsers,allUser,onlineUserIds,userAuth,showUserSideBar,setShowUserSideBar} = useBearStore(state=>state)
     const {setSelectedUser} = useMessages(state=>state)
     const [checkOnline, setCheckOnline] = useState(false)
     const [actualOnline,setActualOnline] = useState([])
+    const navigate = useNavigate()
     useEffect(()=>{
         
         getAllUsers()
@@ -51,17 +53,25 @@ const Sidebar = () => {
         </div> 
         {
             checkOnline && (
-                onlineUserIds?.length<=1 && (
+                actualOnline?.length<=1 && (
                 <div className='w-full text-center text-neutral-content opacity-65 font-semibold mt-2'>
                     <p className=''>No online user at this time</p>
                 </div>
             )
             )
         }
+        {
+                allUser?.length< 1 && (
+                    <div className='w-full text-center text-neutral-content opacity-65 font-semibold mt-2'>
+                        <p className='py-3 text-neutral-content opacity-65'>You have no friends yet Add people to chat</p>
+                        <button className='btn btn-info' onClick={()=>navigate('/add-friends')}>Add friends</button>
+                    </div>
+                )
+            }
         </div>
         <div className='overflow-y-auto h-[85%] '>
             <div className='flex flex-col gap-4 '>
-        {
+            {
                 allUser?.map(user=>(
                     <button 
                         key={user.email} 
@@ -85,6 +95,7 @@ const Sidebar = () => {
                     </button>
                 ))
             }
+            
             </div>
         </div>
         <div className='h-7'></div>
