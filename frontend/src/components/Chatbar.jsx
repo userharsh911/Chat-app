@@ -21,8 +21,7 @@ const Chatbar = () => {
    useEffect(()=>{
      if(!isMessageGet){
        scrollRef.current?.scrollIntoView({ behavior: "auto"});
-        
-        // console.log("run")
+
      }
    },[selectedUser,isMessageGet,messages])
 

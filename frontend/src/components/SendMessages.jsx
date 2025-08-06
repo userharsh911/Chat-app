@@ -9,22 +9,21 @@ import { Forward } from 'lucide-react';
 import { LoaderCircle } from 'lucide-react';
 
 const SendMessages = () => {
-    const {register, handleSubmit,setValue,watch,} = useForm();
+    const {register, handleSubmit,setValue,watch} = useForm();
     const [showImage, setShowImage] = useState(null)
     const [isMessageSent, setIsMessageSent] = useState(false)
     const {sendMessages} = useMessages()
 
     const sentMessage = async (data)=>{
         const {text, image} = data;
-        const preImage = showImage;
         setValue("text","")
         setShowImage(null)
-        // console.log("submit image ",image)
         try {
             setIsMessageSent(true)
+            console.log("image",image)
             if(text || image[0]){
             let base64Image;
-            if(image[0] && !preImage){
+            if(image[0]){
                 const reader = new FileReader()
                 reader.readAsDataURL(image[0])
                 reader.onload = async()=>{
@@ -34,7 +33,7 @@ const SendMessages = () => {
                 }
             }else{
                 // console.log(data)
-                await sendMessages({text,image:preImage})
+                await sendMessages({text,image:null})
             }
             
         }else{

@@ -5,15 +5,12 @@ import useBearStore from './store/store'
 import Loader from './components/Loader/Loader'
 import { Toaster } from 'react-hot-toast'
 import useTheme from './store/userTheme'
-import useMessages from './store/message.store'
 const App = () => {
   const {ischeckAuth,loader} = useBearStore((state)=>state)
-  const {messages} = useMessages(state=>state)
   const {changeTheme,theme} = useTheme((state)=>state)
   useEffect(()=>{
-    // console.log("evey messages ",messages)
     ischeckAuth()
-  },[ischeckAuth,messages])
+  },[ischeckAuth])
   useEffect(()=>{
     document.getElementsByTagName('html')[0].setAttribute('data-theme',theme)
   },[changeTheme,theme])
