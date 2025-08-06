@@ -78,7 +78,7 @@ const Chatbar = () => {
                       ? userAuth.fullname
                       : selectedUser.fullname}
                   </div>
-                  <div className="chat-bubble bg-primary text-primary-content">
+                  <div className="chat-bubble bg-primary max-w-50 text-primary-content">
                     <img
                       onClick={() => {
                         setShowFullImage(true);
