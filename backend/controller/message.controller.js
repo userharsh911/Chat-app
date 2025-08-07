@@ -28,7 +28,7 @@ export const getMessages = async(req,res)=>{
                 { senderId,recieverId },
                 {senderId:recieverId,recieverId:senderId}
             ]
-        })
+        }).populate("senderId")
         if(!yourMessage) return res.status(404).json({message:"messages not found"});
 
         res.status(200).json({message:yourMessage})
