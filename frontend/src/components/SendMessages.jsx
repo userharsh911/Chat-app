@@ -7,12 +7,16 @@ import toast from 'react-hot-toast';
 import useMessages from '../store/message.store';
 import { Forward } from 'lucide-react';
 import { LoaderCircle } from 'lucide-react';
+import useGroups from '../store/group.store';
+import useBearStore from '../store/store';
 
 const SendMessages = () => {
     const {register, handleSubmit,setValue,watch} = useForm();
     const [showImage, setShowImage] = useState(null)
     const [isMessageSent, setIsMessageSent] = useState(false)
     const {sendMessages} = useMessages()
+    const {selectedGroup} = useGroups(state=>state)
+    const {userAuth} = useBearStore(state=>state)
 
     const sentMessage = async (data)=>{
         const {text, image} = data;
@@ -20,7 +24,6 @@ const SendMessages = () => {
         setShowImage(null)
         try {
             setIsMessageSent(true)
-            console.log("image",image)
             if(text || image[0]){
             let base64Image;
             if(image[0]){
@@ -28,7 +31,6 @@ const SendMessages = () => {
                 reader.readAsDataURL(image[0])
                 reader.onload = async()=>{
                     base64Image = reader.result;
-                    console.log("before")
                     setValue("image","");
                     await sendMessages({text,image:base64Image})
                     setIsMessageSent(false)
@@ -76,6 +78,7 @@ const SendMessages = () => {
             <input 
                 type="text" 
                 placeholder="Type Messages..." 
+                disabled={selectedGroup?.people.includes(userAuth._id) && selectedGroup?.onlyAdminCanMessage ? true : false}
                 autoComplete='off'
                 className="input w-[90%] focus:outline-none first-capital border border-green-400" 
                 {...register("text")}

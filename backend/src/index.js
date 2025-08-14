@@ -8,6 +8,7 @@ import cors from "cors"
 import {app, server} from '../libs/socket.js';
 import path from "path"
 import userRequest from '../routes/requests.routes.js';
+import groupsRouter from '../routes/group.route.js';
 
 
 dotenv.config()
@@ -24,6 +25,7 @@ app.use(cors({
 app.use('/api/auth',authRouter)
 app.use('/api/messages',message)
 app.use('/api/requests',userRequest)
+app.use('/api/groups',groupsRouter)
 
 if(process.env.NODE_ENV==="production"){
     app.use(express.static(path.join(__dirname,"../frontend/dist")))

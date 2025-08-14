@@ -11,7 +11,6 @@ const Profile = () => {
   const {userAuth,userProfile} = useBearStore(state=>state)
 
   const updateProfilePic = (file)=>{
-    console.log(file)
     if(file){
       setLoading(true)
       const reader = new FileReader()

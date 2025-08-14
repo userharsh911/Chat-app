@@ -18,8 +18,7 @@ const FriendRequest = () => {
         }
         const val = searchParam.current.value.trim()
         searchParam.current.value = "";
-        const searched = await searchUserByName(val);
-        console.log("searched users: ", searched);
+        await searchUserByName(val);
     }
     useEffect(()=>{
         getUserSendRequest()

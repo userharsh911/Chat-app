@@ -2,6 +2,7 @@ import { create } from "zustand";
 import axiosApi from "../api/axiosApi";
 import toast from "react-hot-toast";
 import useBearStore from "./store";
+import useGroups from "./group.store";
 const useMessages = create((set,get)=>({
     messages: [],
     selectedUser:null,
@@ -37,8 +38,8 @@ const useMessages = create((set,get)=>({
         set({isMessageSent:true})
         try {
             const {selectedUser,messages} = get()
-            // console.log("selected user",selectedUser)
-            const res = await axiosApi.post(`/messages/send/${selectedUser._id}`,data)
+            const grp = useGroups.getState().selectedGroup;
+            const res = await axiosApi.post(`/messages/send/${selectedUser?._id || grp?._id}`,data)
             set({messages:[...messages,res.data.message]})
             return res.data;
         } catch (error) {
@@ -58,10 +59,11 @@ const useMessages = create((set,get)=>({
         if(!selectedUser) return;
         const socket = useBearStore.getState().socket;
         socket.on("updateMessage",({newMessage})=>{
-            if(newMessage.senderId==get().selectedUser._id){
+            if(newMessage.senderId==get().selectedUser?._id){
                 set({messages:[...get().messages,newMessage]})
             }
         })
+        
     },
 
     unSubscribeFromMessage:()=>{

@@ -2,6 +2,7 @@ import User from "../model/user.model.js"
 import Message from "../model/message.model.js"
 import cloudinary from "../libs/cloudinary.js";
 import {io, receiverSocketId} from '../libs/socket.js'
+import Group from "../model/group.model.js";
 
 
 export const getAllUsersForSidebar = async (req,res)=>{
@@ -23,15 +24,24 @@ export const getMessages = async(req,res)=>{
     const {id:recieverId} =  req.params;
     const senderId = req.user._id;
     try {
+        const grp = await Group.findById(recieverId);
+        if(grp){
+            const yourMessage = await Message.find({recieverId}).populate("senderId")
+
+            if(!yourMessage) return res.status(404).json({message:"messages not found"});
+            return res.status(200).json({message:yourMessage})
+        }
+
         const yourMessage = await Message.find({
             $or:[
                 { senderId,recieverId },
-                {senderId:recieverId,recieverId:senderId}
+                {senderId:recieverId,recieverId:senderId},
+                // {recieverId}
             ]
         }).populate("senderId")
         if(!yourMessage) return res.status(404).json({message:"messages not found"});
 
-        res.status(200).json({message:yourMessage})
+        return res.status(200).json({message:yourMessage})
 
     } catch (error) {
         // console.log("error while fetching all messages ",error)   
@@ -63,14 +73,18 @@ export const sendMessage = async(req,res)=>{
             image:imageUrl?.secure_url
         });
         await senderMessage.save();
+        await senderMessage.populate("senderId");
 
-        const id = receiverSocketId(recieverId.id)
+        const id = receiverSocketId(recieverId.id);
+        
         if(id){
             io.to(id).emit("updateMessage",{newMessage:senderMessage,sendUser:sendUser})
             io.to(id).emit("updateNotification",{newMessage:senderMessage,sendUser:sendUser})
+        }else{
+            io.to(recieverId.id.toString()).emit("groupMessage",{newMessage:senderMessage,sendUser:sendUser})
+            io.to(recieverId.id.toString()).emit("grpMessageNotify",{newMessage:senderMessage,sendUser:sendUser})
         }
-
-
+        
         return res.status(201).json({message:senderMessage})
 
         

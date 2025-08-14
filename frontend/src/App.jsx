@@ -9,7 +9,7 @@ const App = () => {
   const {ischeckAuth,loader} = useBearStore((state)=>state)
   const {changeTheme,theme} = useTheme((state)=>state)
   useEffect(()=>{
-    ischeckAuth()
+    ischeckAuth();
   },[ischeckAuth])
   useEffect(()=>{
     document.getElementsByTagName('html')[0].setAttribute('data-theme',theme)

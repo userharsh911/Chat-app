@@ -3,6 +3,7 @@ import axiosApi from "../api/axiosApi";
 import toast from "react-hot-toast";
 import {io} from "socket.io-client";
 import useMessages from "./message.store";
+import Group from "./group.store";
 const BASE_URL = import.meta.env.MODE=="development" ? "http://localhost:3002" : "/";
 
 const useBearStore = create((set,get)=>({
@@ -201,12 +202,58 @@ const useBearStore = create((set,get)=>({
         })
         socket.on("updateNotification",({newMessage,sendUser})=>{
             const selectedUserId = useMessages.getState().selectedUser?._id;
-            if(newMessage.senderId!=selectedUserId){
+            if(newMessage.senderId!=selectedUserId ){
                 toast(`${sendUser.fullname} sends you a message.`, {
                     icon: '😀',
                 });
             }
             
+        })
+        socket.on("grpMessageNotify",({newMessage,sendUser})=>{
+            const grp = Group.getState().selectedGroup;
+            if(newMessage.recieverId!=grp?._id ){
+                toast(`${sendUser.fullname} sends a message in group.`, {
+                    icon: '😀',
+                });
+            }
+            
+        })
+
+        socket.on("groupMessage",({newMessage})=>{
+            const grp = Group.getState().selectedGroup;
+            if(newMessage.recieverId==grp?._id){
+                useMessages.getState().setMessage(newMessage)
+            }
+        })
+
+        socket.on("someoneAddYouToGroup",async({group})=>{
+            toast.success(`You added in a Group(${group.groupName})`)
+            const setAllGroup = Group.getState().setAllGroup;
+            setAllGroup(group)
+            socket.emit("joinRoom",group._id);
+
+        })
+        socket.on("removeToGroup",async({group})=>{
+            const setGroup = Group.getState().setSelectedGroup;
+            const selectedGroup = Group.getState().selectedGroup;
+            if(group._id==selectedGroup?._id){
+                setGroup(null);
+            }
+            await Group.getState().getAllGroup();
+            toast.success(`You were removed from ${group.groupName} by admin`)
+        })
+        socket.on("updatedGroup",async({group})=>{
+            const setGroup = Group.getState().setSelectedGroup;
+            await Group.getState().getAllGroup();
+            setGroup(group)
+            toast.success(`${group.groupName} is updated by admin`)
+
+        })
+        socket.on("deleteGroup",async({group})=>{
+            const setGroup = Group.getState().setSelectedGroup;
+            setGroup(null)
+            await Group.getState().getAllGroup();
+            toast.success(`${group.groupName} has been deleted by admin`)
         })
     },
 
