@@ -18,7 +18,15 @@ const FriendRequest = () => {
         }
         const val = searchParam.current.value.trim()
         searchParam.current.value = "";
-        await searchUserByName(val);
+        toast.promise(
+            searchUserByName(val),
+            {
+                loading:"Please wait searching...",
+                success:"Done ✅",
+                error:"error while searching, Please try again",
+            }
+
+        )
     }
     useEffect(()=>{
         getUserSendRequest()
