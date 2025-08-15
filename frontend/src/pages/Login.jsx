@@ -83,7 +83,7 @@ const Login = () => {
                     )
                 }
           </form>
-          <p className='text-center '>Don't have an account <button className='text-blue-500 hover:text-blue-600 cursor-pointer' onClick={()=>navigate('/signup')}>Signup</button></p>
+          <p className='text-center '>Don't have an account? <button className='text-blue-500 hover:text-blue-600 cursor-pointer' onClick={()=>navigate('/signup')}>Signup</button></p>
         </div>
       </div>
       <div className='w-full hidden lg:w-1/2 bg-gray-950 md:flex items-center flex-col justify-center p-6'>
