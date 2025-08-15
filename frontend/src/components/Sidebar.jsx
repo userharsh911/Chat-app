@@ -11,6 +11,12 @@ import useGroups from "../store/group.store";
 import CreateGroupForm from "./CreateGroupForm";
 const Sidebar = () => {
   const {
+    allGroups,
+    setSelectedGroup,
+    getAllGroup,
+    setShowInfo
+  } = useGroups(state=>state)
+  const {
     getAllUsers,
     allUser,
     onlineUserIds,
@@ -18,12 +24,7 @@ const Sidebar = () => {
     showUserSideBar,
     setShowUserSideBar,
   } = useBearStore((state) => state);
-  const {
-    allGroups,
-    setSelectedGroup,
-    getAllGroup,
-    setShowInfo
-  } = useGroups(state=>state)
+  
   const { setSelectedUser } = useMessages((state) => state);
   const [checkOnline, setCheckOnline] = useState(false);
   const [actualOnline, setActualOnline] = useState([]);
@@ -35,14 +36,7 @@ const Sidebar = () => {
     getAllUsers().then(() => {
       setLoading(false);
     });
-  }, [getAllUsers, onlineUserIds,allGroups]);
-
-  useEffect(() => {
-    setLoading(true);
-    getAllGroup().then(() => {
-      setLoading(false);
-    });
-  }, [getAllGroup]);
+  }, [getAllUsers, onlineUserIds]);
 
   useEffect(() => {
     onlineUserIds?.length > 0 &&
@@ -50,6 +44,13 @@ const Sidebar = () => {
         onlineUserIds.filter((id) => userAuth.friends.includes(id))
       );
   }, [onlineUserIds, userAuth]);
+
+  useEffect(() => {
+    setLoading(true);
+    getAllGroup().then(() => {
+      setLoading(false);
+    });
+  }, [getAllGroup]);
 
   return (
     <aside
@@ -78,8 +79,8 @@ const Sidebar = () => {
         </div>
         {/* name of each tab group should be unique */}
         <div className="tabs tabs-lift h-[95%]">
-          <label className="tab font-bold opacity-100" onClick={()=>setSelectedGroup(null)}>
-            <input type="radio" name="my_tabs_4" />
+          <label className="tab  font-bold opacity-100" onClick={()=>setSelectedGroup(null)}>
+            <input type="radio" name="my_tabs_4" defaultChecked/>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -180,7 +181,7 @@ const Sidebar = () => {
           </div>
 
           <label className="tab font-bold opacity-100" onClick={()=>setSelectedUser(null)}>
-            <input type="radio" name="my_tabs_4" defaultChecked />
+            <input type="radio" name="my_tabs_4" />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
