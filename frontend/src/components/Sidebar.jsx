@@ -109,13 +109,13 @@ const Sidebar = () => {
                   className="toggle toggle-neutral text-neutral-500 bg-neutral-content"
                   onClick={() => setCheckOnline((val) => !val)}
                 />
-                <p className=" font-semibold flex gap-1 text-neutral-content ">
+                <p className=" font-semibold flex gap-1 text-base-content ">
                   Online <span className="">({actualOnline.length}) </span>
                 </p>
               </label>
             </div>
             {checkOnline && actualOnline?.length < 1 && (
-              <div className="w-full text-center text-neutral-content pb-3 opacity-65 font-semibold mt-2">
+              <div className="w-full text-center text-base-content pb-3 opacity-65 font-semibold mt-2">
                 <p className="">No online user at this time</p>
               </div>
             )}
