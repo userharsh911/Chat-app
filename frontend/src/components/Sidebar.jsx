@@ -14,7 +14,8 @@ const Sidebar = () => {
     allGroups,
     setSelectedGroup,
     getAllGroup,
-    setShowInfo
+    setShowInfo,
+    selectedGroup
   } = useGroups(state=>state)
   const {
     getAllUsers,
@@ -25,7 +26,7 @@ const Sidebar = () => {
     setShowUserSideBar,
   } = useBearStore((state) => state);
   
-  const { setSelectedUser } = useMessages((state) => state);
+  const { setSelectedUser,selectedUser } = useMessages((state) => state);
   const [checkOnline, setCheckOnline] = useState(false);
   const [actualOnline, setActualOnline] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -148,7 +149,7 @@ const Sidebar = () => {
                           ? "flex"
                           : "hidden")) ||
                       "flex"
-                    } w-full cursor-pointer bg-base-100 card-xs shadow-sm px-4 py-2`}
+                    } w-full cursor-pointer bg-base-100 hover:bg-base-200 ${selectedUser?._id==user?._id && 'bg-base-200'} card-xs shadow-sm px-4 py-2`}
                     // onClick={()=>}
                   >
                     <div
@@ -207,7 +208,7 @@ const Sidebar = () => {
               </div>
             )}
                 
-            <div className="overflow-y-auto h-[85%]">
+            <div className="overflow-y-auto h-[85%] mt-5">
               <div className="flex flex-col gap-4 ">
                 {allGroups?.map((grp) => (
                   <button
@@ -216,7 +217,7 @@ const Sidebar = () => {
                       setSelectedGroup(grp);
                       setShowUserSideBar(false);
                     }}
-                    className={`w-full flex cursor-pointer card-xs shadow-sm px-4 py-2`}
+                    className={`w-full flex cursor-pointer hover:bg-base-200 ${selectedGroup?._id==grp?._id && 'bg-base-200'} card-xs shadow-sm px-4 py-2`}
                     // onClick={()=>}
                   >
                     <div className={``}>
