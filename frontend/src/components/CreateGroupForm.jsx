@@ -39,8 +39,12 @@ const CreateGroupForm = (editVal) => {
         )
       document.getElementById("editModal").click();
     } else {
+      if(!groupName){
+        setLoading(false);
+        return toast.error("Group name is required");
+      }
         toast.promise(
-            await createGroupToDB({ groupName, onlyAdminCanMessage, people, profilepic: image }),
+            createGroupToDB({ groupName, onlyAdminCanMessage, people, profilepic: image }),
             {
                 loading: "Creating..., Do not Close",
                 success: "Created successfully!",
@@ -77,9 +81,11 @@ const CreateGroupForm = (editVal) => {
             onChange={(e)=>setProfilepic(e.target.files[0])}
           />
 
-          <label className="label mt-3">
+          <div className="flex gap-2 mt-3">
+            <label className="label">
             Only admin can message (optional)
           </label>
+          
           <label className="toggle text-base-content">
             <input type="checkbox" name="onlyAdminCanMessage" checked={onlyAdminCanMessage} onChange={()=>setOnlyAdminCanMessage(val=>!val)} />
             <svg
@@ -111,6 +117,22 @@ const CreateGroupForm = (editVal) => {
               <path d="M20 6 9 17l-5-5"></path>
             </svg>
           </label>
+          </div>
+          <div className="flex flex-col gap-2">
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-neutral mt-4 self-start"
+            >
+              {editVal?.groupName ? "edit" : "Add"}
+              {loading ? "ing..." : ""}
+            </button>
+            {loading && (
+              <div className="flex items-center justify-center mt-4">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400"></div>
+              </div>
+            )}
+          </div>
         </div>
         <ul
           className={`list ${
@@ -146,19 +168,7 @@ const CreateGroupForm = (editVal) => {
             </li>
           ))}
         </ul>
-        <button
-          type="submit"
-          disabled={loading}
-          className="btn btn-neutral mt-4 self-end"
-        >
-          {editVal?.groupName ? "edit" : "create"}
-          {loading ? "..." : ""}
-        </button>
-        {loading && (
-          <div className="flex items-center justify-center mt-4">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400"></div>
-          </div>
-        )}
+        
       </fieldset>
     </form>
   );
