@@ -181,6 +181,7 @@ const useBearStore = create((set,get)=>({
             // console.log("online users ",get().onlineUserIds)
         })
         socket.on("someoneSendMessage",async({sender,getter})=>{
+            console.log("I'm calling")
             set({userAuth:getter})
             const res = await get().getUserSendRequest()
             set({requestedSentOrReceiveUser:res})
@@ -202,7 +203,8 @@ const useBearStore = create((set,get)=>({
         })
         socket.on("updateNotification",({newMessage,sendUser})=>{
             const selectedUserId = useMessages.getState().selectedUser?._id;
-            if(newMessage.senderId!=selectedUserId ){
+            console.log("noti ",newMessage)
+            if(newMessage.senderId._id!=selectedUserId ){
                 toast(`${sendUser.fullname} sends you a message.`, {
                     icon: '😀',
                 });
