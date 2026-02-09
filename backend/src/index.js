@@ -9,11 +9,12 @@ import {app, server} from '../libs/socket.js';
 import path from "path"
 import userRequest from '../routes/requests.routes.js';
 import groupsRouter from '../routes/group.route.js';
+import job from '../libs/cron.js';
 
-
+    
 dotenv.config()
 
-const __dirname = path.resolve();
+    const __dirname = path.resolve();
 
 app.use(express.json({limit: '50mb'}))
 app.use(cookieParser())
@@ -21,6 +22,8 @@ app.use(cors({
     origin: "http://localhost:5173",
     credentials:true
 }))
+
+job.start();
 
 app.use('/api/auth',authRouter)
 app.use('/api/messages',message)
