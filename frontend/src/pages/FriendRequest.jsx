@@ -70,7 +70,7 @@ const FriendRequest = () => {
                 />
             </div>
             <ul className='mt-2 bg-base-100 rounded-lg h-4/5 overflow-y-auto'>
-                {searchedUsers.map(user => (
+                {searchedUsers?.map(user => (
                     <li key={user._id+requestedSentOrReceiveUser[0]} className='flex justify-between items-center p-2 border-b'>
                         <span>{user.fullname}</span>
                         {user.friends.includes(userAuth._id) ? (

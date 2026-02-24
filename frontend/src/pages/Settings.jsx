@@ -12,7 +12,7 @@ const Settings = () => {
         Select a theme for your chat interface.
       </p>
       <div className='w-full h-fit grid sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7  gap-1'>
-        {daisyThemes.map(t=>(
+        {daisyThemes?.map(t=>(
           <div onClick={()=>changeTheme(t)} key={t} className={`${theme==t?'bg-base-content':'bg-base-100'}  border border-black cursor-pointer px-4 py-2 rounded-3xl`}>
             <div className=' flex gap-2 h-8 w-full px-4 py-2 rounded-2xl bg-white' data-theme={t}>
               <div className='h-full w-1/3 rounded-[2px] bg-base-content border border-base-content '></div>
