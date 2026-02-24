@@ -23,7 +23,7 @@ app.use(cors({
     credentials:true
 }))
 
-job.start();
+// job.start();
 
 app.use('/api/auth',authRouter)
 app.use('/api/messages',message)
