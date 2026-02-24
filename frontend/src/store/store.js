@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import {io} from "socket.io-client";
 import useMessages from "./message.store";
 import Group from "./group.store";
-const BASE_URL = import.meta.env.MODE=="development" ? "http://localhost:3002" : `${import.meta.env.BACKEND_URI}/`;
+const BASE_URL = import.meta.env.MODE=="development" ? "http://localhost:3002" : `${import.meta.env.VITE_BACKEND_URI}/`;
 
 const useBearStore = create((set,get)=>({
     userAuth:false,
