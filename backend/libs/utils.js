@@ -5,7 +5,7 @@ const createJSON_token = (userid,res)=>{
     res.cookie('jwt',token,{
         maxAge: 2*24*60*60*100,
         httpOnly:true,
-        sameSite: 'none',
+        sameSite: 'strict',
         secure: process.env.NODE_ENV !="developement"
     })
     return token;

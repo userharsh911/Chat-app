@@ -1,101 +1,166 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { Calendar, Mail } from 'lucide-react';
-import { FaCamera } from "react-icons/fa";
-import useBearStore from '../store/store'
-import userImage from '../assets/user.png'
-const Profile = () => {
-  const [since, setSince] = useState('')
-  const [image,setImage] = useState(null)
-  const [loading,setLoading] = useState(false)
-  const profile = useRef(null)
-  const {userAuth,userProfile} = useBearStore(state=>state)
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Calendar, Mail, Camera, ShieldCheck, Award, Settings, Bell } from 'lucide-react';
+import useBearStore from '../store/store';
+import userImage from '../assets/user.png';
+import useGroups from '../store/group.store';
 
-  const updateProfilePic = (file)=>{
-    if(file){
-      setLoading(true)
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = async()=>{
-        const base64Image = reader.result
-        profile.current.value = ""
-        setImage(base64Image)
+const Profile = () => {
+  const [since, setSince] = useState('');
+  const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const { userAuth, userProfile, allUser } = useBearStore(state => state);
+  const { allGroups } = useGroups(state => state);
+
+  const updateProfilePic = (file) => {
+    if (file) {
+      setLoading(true);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = async () => {
+        const base64Image = reader.result;
+        setImage(base64Image);
         await userProfile(base64Image);
-        setLoading(false)
-      }
+        setLoading(false);
+      };
     }
-    
-  }
-  // console.log(userAuth)
-  useEffect(()=>{
-    const date = new Date(userAuth?.createdAt)
-    setSince(date.toLocaleDateString())
-  },[userAuth])
+  };
+
+  useEffect(() => {
+    if (userAuth?.createdAt) {
+      const date = new Date(userAuth.createdAt);
+      setSince(date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }));
+    }
+  }, [userAuth]);
+
   return (
-    <div className='w-full min-h-screen flex'>
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-1 sm:p-6 bg-base-200">
-        <div className=" w-full  py-8 px-4 flex items-center">
-          <div className="w-5/6 mx-auto  rounded-3xl shadow-xl overflow-hidden flex flex-col">
-            {/* Header Section */}
-            <div className=" h-40 w-full relative flex-shrink-0">
-              <div className="absolute -bottom-20 left-1/2 transform -translate-x-1/2">
-                <div className="w-40 h-40 rounded-full border-4 border-gray-800 shadow-lg flex items-center justify-center">
-                  <div className=" text-5xl">
-                    {
-                      <img src={image || userAuth?.profilepic || userImage} alt="" className='w-36 h-36 rounded-full' />
-                    }
+    <div className="w-full h-full flex flex-col lg:flex-row overflow-hidden">
+      
+      {/* 1. Left Section*/}
+      <motion.div 
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="w-full lg:w-1/2 flex h-full items-center justify-center p-4 sm:p-12 relative"
+      >
+        <div className="w-full max-w-md bg-base-100 rounded-[3rem] shadow-2xl shadow-primary/5 border border-base-content/5 overflow-hidden relative">
+          
+          {/* Banner / Header Gradient */}
+          <div className="h-44 w-full bg-gradient-to-br from-primary via-secondary to-accent relative">
+             <div className="absolute inset-0 opacity-20" style={{backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 30L15 0h30L30 30z' fill='%23ffffff'/%3E%3C/svg%3E")`}}></div>
+          </div>
+
+          {/* Avatar Section */}
+          <div className="relative -mt-20 flex justify-center">
+            <motion.div 
+              whileHover={{ scale: 1.05 }}
+              className="relative group"
+            >
+              <div className="w-40 h-40 rounded-full border-[6px] border-base-100 shadow-xl overflow-hidden bg-base-300">
+                <img 
+                  src={image || userAuth?.profilepic || userImage} 
+                  alt="Profile" 
+                  className={`w-full h-full object-cover transition-all duration-500 ${loading ? 'blur-sm opacity-50' : ''}`} 
+                />
+              </div>
+
+              {/* Camera Action Overlay */}
+              <label 
+                htmlFor="image-upload" 
+                className={`absolute bottom-2 right-2 p-3 bg-primary text-primary-content rounded-full shadow-lg cursor-pointer hover:scale-110 transition-transform ${loading ? 'animate-pulse' : ''}`}
+              >
+                <Camera size={20} />
+                <input 
+                  id="image-upload"
+                  type="file" 
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => updateProfilePic(e.target.files[0])}
+                  disabled={loading}
+                />
+              </label>
+            </motion.div>
+          </div>
+
+          {/* User Details */}
+          <div className="pt-6 pb-12 px-8 text-center">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              <div className="flex items-center justify-center gap-2 mb-1">
+                <h1 className="text-3xl font-black tracking-tight">{userAuth?.fullname}</h1>
+                <ShieldCheck className="text-primary" size={24} />
+              </div>
+              <div className="grid grid-cols-1 gap-3 mt-5">
+                <div className="flex items-center gap-4 p-4 bg-base-200/50 rounded-2xl border border-base-content/5">
+                  <div className="p-2 bg-primary/10 text-primary rounded-xl"><Mail size={20}/></div>
+                  <div className="text-left">
+                    <p className="text-[10px] uppercase tracking-widest opacity-40 font-bold">Email Address</p>
+                    <p className="text-sm font-semibold">{userAuth?.email}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 p-4 bg-base-200/50 rounded-2xl border border-base-content/5">
+                  <div className="p-2 bg-secondary/10 text-secondary rounded-xl"><Calendar size={20}/></div>
+                  <div className="text-left">
+                    <p className="text-[10px] uppercase tracking-widest opacity-40 font-bold">Member Since</p>
+                    <p className="text-sm font-semibold">{since}</p>
                   </div>
                 </div>
               </div>
-              <div className='absolute -bottom-20 left-[60%] transform text-4xl'>
-                  <label htmlFor={loading? "":'image'} className={`${loading ? 'cursor-progress' : 'cursor-pointer'} text-shadow-base-300`}>
-                    <FaCamera />
-                    <input 
-                      type="file" 
-                      accept='image/*'
-                      name='profilePic'
-                      className='hidden'
-                      ref={profile}
-                      id='image'
-                      onChange={(e)=>updateProfilePic(e.target.files[0])}
-                    />
-                  </label>
-                </div>
+            </motion.div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* 2. Right Section: Account Stats & Activity */}
+      <motion.div 
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="w-full h-full lg:w-1/2 p-6 sm:p-12 flex flex-col justify-center"
+      >
+        <div className="max-w-xl mx-auto w-full space-y-8">
+          <div>
+            <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+              <Award className="text-primary" /> Account Overview
+            </h2>
+            
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { label: 'Groups In', val: allGroups?.length || 0, icon: <Bell size={16}/>, color: 'primary' },
+                { label: 'Friends', val: allUser?.length || 0, icon: <Award size={16}/>, color: 'secondary' },
+              ].map((stat, i) => (
+                <motion.div 
+                  key={i}
+                  whileHover={{ y: -5 }}
+                  className="p-6 rounded-[2rem] bg-base-200 border border-base-content/5"
+                >
+                  <div className={`w-8 h-8 rounded-lg bg-${stat.color}/10 text-${stat.color} flex items-center justify-center mb-4`}>
+                    {stat.icon}
+                  </div>
+                  <p className="text-3xl font-black">{stat.val}</p>
+                  <p className="text-xs opacity-50 font-bold uppercase tracking-tighter">{stat.label}</p>
+                </motion.div>
+              ))}
             </div>
+          </div>
 
-            {/* Profile Info */}
-            <div className="flex-1 pt-24 pb-8 w-full px-8 text-center flex flex-col justify-center">
-              <h1 className="text-3xl font-bold mb-3">{userAuth?.fullname}</h1>
-              
-              <div className="flex items-center justify-center w-full mb-8">
-                <Calendar className="w-5 h-5 mr-2" />
-                <span className="text-base">Since {since}</span>
-              </div>
-
-              {/* Contact Info */}
-              <div className=" rounded-2xl p-6">
-                <div className="flex items-center justify-center">
-                  <Mail className="w-5 h-5 mr-3" />
-                  <span className="text-base">{userAuth?.email}</span>
-                </div>
-              </div>
+          <div className="space-y-4">
+            <h3 className="font-bold opacity-60 flex items-center gap-2">
+              <Settings size={18} /> Developer
+            </h3>
+            <div className="p-6 rounded-[2rem] border-2 border-dashed border-base-content/10 flex flex-col items-center justify-center text-center">
+              <p className="text-sm opacity-50 mb-4">
+                For more settings and preferences, please visit the developer's portfolio.
+              </p>
+              <a href='https://userharsh911.tech' target='_blank' className="btn btn-primary btn-wide rounded-2xl shadow-lg shadow-primary/20">View Developer</a>
             </div>
           </div>
         </div>
-      </div>
-      <div className='w-full hidden lg:w-1/2 md:flex items-center flex-col justify-center p-6 bg-base-100'>
-        <div className="flex w-10/12 h-2/6 flex-col gap-4 ">
-          <div className="flex items-center gap-4">
-            <div className="skeleton h-16 w-16 shrink-0 rounded-full"></div>
-            <div className="flex flex-col gap-4">
-              <div className="skeleton h-4 w-20"></div>
-              <div className="skeleton h-4 w-28"></div>
-            </div>
-          </div>
-          <div className="skeleton h-full w-full"></div>
-        </div>
-      </div>
+      </motion.div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

@@ -24,12 +24,7 @@ const useBearStore = create((set,get)=>({
             get().connectSocket();
             return res.data
         } catch (error) {
-            // console.log("error while fetching data to check auth ",error)
-            toast.error(error.response.data.message,{
-                duration: 1000,
-            })
-            set({userAuth:false})
-            // return error.response.data.message
+            return error.response.data.message
         }
         finally{
             set({loader:false})

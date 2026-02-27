@@ -10,7 +10,7 @@ const Authenticated = ({children,auth=true}) => {
             navigate('/login');
         }
         else if(userAuth && !userAuth==auth) navigate('/')
-    },[userAuth,auth])
+    },[userAuth,auth,navigate])
 
     return (
     <>
