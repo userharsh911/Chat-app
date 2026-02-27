@@ -51,7 +51,6 @@ const useBearStore = create((set,get)=>({
             return response.data
         } catch (error) {
             toast.error(error.response.data.message)
-            // console.log("error while logging in axios ",error)
             return null
         }
             
@@ -69,7 +68,6 @@ const useBearStore = create((set,get)=>({
             })
         } catch (error) {
             toast.error(error.response.data.message)
-            // console.log("error while logout in axios ",error)
             return false
         }
         finally{
@@ -89,7 +87,6 @@ const useBearStore = create((set,get)=>({
             });
             return updatedUser;
         } catch (error) {
-            // console.log("error while uploading image by axios ",error)
             toast.error(error.response.data.message)
         }
     },
@@ -97,10 +94,8 @@ const useBearStore = create((set,get)=>({
     getAllUsers: async()=>{
         try {
             const res = await axiosApi.get("/messages/users")
-            // console.log(res)
             set({allUser:res.data})
         } catch (error) {
-            // console.log("error while fetching all users ",error.message)
             toast.error(error.response.data.message)
         }
     },
@@ -111,7 +106,6 @@ const useBearStore = create((set,get)=>({
             set({searchedUsers:res.data})
             return res.data
         } catch (error) {
-            // console.log("error while searching users : ",error.message)
             toast.error(error.response.data.message)
         }
 
@@ -123,7 +117,6 @@ const useBearStore = create((set,get)=>({
             set({requestedSentOrReceiveUser:res.data})
             return res.data
         } catch (error) {
-            // console.log("error while getting",error.message)
             toast.error(error.response.data.message)
         }
     },
@@ -134,7 +127,6 @@ const useBearStore = create((set,get)=>({
             set({userAuth:res.data.user})
             toast.success(`friend request send to ${res.data.sendTo}`)
         } catch (error) {
-            // console.log("error while sending request ",error.message)
             toast.error(error.response.data.message)
         }
     },
@@ -145,7 +137,6 @@ const useBearStore = create((set,get)=>({
             set({userAuth:res.data.accept})
             toast.success(`You accepted ${res.data.whichUser} friend request`)
         } catch (error) {
-            // console.log("error accepting friend request ",error.message)
             toast.error(error.response.data.message)
         }
     },
@@ -155,7 +146,6 @@ const useBearStore = create((set,get)=>({
             set({userAuth:res.data.reject})
             toast.error(`You rejected ${res.data.whichUser.fullname} friend request`)
         } catch (error) {
-            // console.log("error accepting friend request ",error.message)
             toast.error(error.response.data.message)
         }
     },
@@ -173,10 +163,8 @@ const useBearStore = create((set,get)=>({
 
         socket.on('onlineUsers',(userIds)=>{
             set({onlineUserIds:userIds})
-            // console.log("online users ",get().onlineUserIds)
         })
         socket.on("someoneSendMessage",async({sender,getter})=>{
-            console.log("I'm calling")
             set({userAuth:getter})
             const res = await get().getUserSendRequest()
             set({requestedSentOrReceiveUser:res})
@@ -198,7 +186,6 @@ const useBearStore = create((set,get)=>({
         })
         socket.on("updateNotification",({newMessage,sendUser})=>{
             const selectedUserId = useMessages.getState().selectedUser?._id;
-            console.log("noti ",newMessage)
             if(newMessage.senderId._id!=selectedUserId ){
                 toast(`${sendUser.fullname} sends you a message.`, {
                     icon: '😀',

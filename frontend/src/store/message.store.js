@@ -20,15 +20,12 @@ const useMessages = create((set,get)=>({
         set({showFullImage:val})
     },
     getMessages:async(id)=>{
-        // console.log('call')
         set({isMessageGet:true})
         try {
             const res = await axiosApi.get(`/messages/${id}`)
             set({messages:res.data.message})
-            // console.log("mila res ",res.data.message)
             return res.data;
         } catch (error) {
-            // console.log("error while getting messages ",error.message)
             toast.error(error.response.data.message)
         }finally{
             set({isMessageGet:false})
@@ -43,7 +40,6 @@ const useMessages = create((set,get)=>({
             set({messages:[...messages,res.data.message]})
             return res.data;
         } catch (error) {
-            // console.log("error while sending messages ",error)
             toast.error(error.response.data.message)
         }
         finally{
@@ -59,9 +55,7 @@ const useMessages = create((set,get)=>({
         if(!selectedUser) return;
         const socket = useBearStore.getState().socket;
         socket.on("updateMessage",({newMessage})=>{
-            console.log("updated ",newMessage)
             if(newMessage.senderId._id==get().selectedUser?._id){
-                console.log("hnhn")
                 set({messages:[...get().messages,newMessage]})
             }
         })

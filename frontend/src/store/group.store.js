@@ -17,7 +17,6 @@ const useGroups = create((set,get)=>({
             return res.data;
         } catch (error) {
             toast.error(`${error.response.data.message}`)
-            // console.log("error while getting groups ",error)
         }
     },
 
@@ -29,7 +28,6 @@ const useGroups = create((set,get)=>({
             return res.data
         } catch (error) {
             toast.error(`${error.response.data.message}`)
-            // console.log("error while creating group ",error.message)
         }
     },
 
@@ -42,7 +40,6 @@ const useGroups = create((set,get)=>({
             return res.data
         } catch (error) {
             toast.error(`${error.response.data.message}`)
-            // console.log("error while creating group ",error.message)
         }
     },
 
@@ -53,7 +50,6 @@ const useGroups = create((set,get)=>({
             return res.data
         } catch (error) {
             toast.error(`${error.response.data.message}`)
-            // console.log("error while getting detailed group ",error.message)
         }
 
     },
@@ -65,7 +61,6 @@ const useGroups = create((set,get)=>({
             return res.data;
         } catch (error) {
             toast.error(`${error.response.data.message}`)
-            // console.log("error while removing member to group ",error.message);
         }
     },
     addMemberToGroup:async(addUserId)=>{
@@ -75,7 +70,6 @@ const useGroups = create((set,get)=>({
             return res.data;
         } catch (error) {
             toast.error(`${error.response.data.message}`)
-            // console.log("error while removing member to group ",error.message);
         }
     },
 
@@ -87,7 +81,6 @@ const useGroups = create((set,get)=>({
             return res.data;
         } catch (error) {
             toast.error(`${error.response.data.message}`)
-            // console.log("error while deleting group ",error.message);
         }
     }
 
