@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Sidebar from '../components/Sidebar'
 import Chatbar from '../components/Chatbar'
 import useBearStore from '../store/store'
@@ -10,7 +10,14 @@ import { SquareX } from 'lucide-react'
 const Home = () => {
   const {userAuth} = useBearStore(state =>state)
   const {selectedUser } = useMessages(state=>state)
-  const {selectedGroup } = useGroups(state=>state)
+  const {selectedGroup, setSelectedGroup, setShowInfo } = useGroups(state=>state);
+
+  useEffect(()=>{
+    setSelectedGroup(null);
+    setShowInfo(null);
+
+  },[]);
+
   return (
     <div className='flex @container gap-5 w-full h-[80vh] bg-base-300 overflow-hidden rounded-lg shadow-lg'>
       {
